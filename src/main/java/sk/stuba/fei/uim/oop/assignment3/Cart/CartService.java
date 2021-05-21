@@ -28,9 +28,9 @@ public class CartService {
         }
         throw new NotFoundException("Cart with this id: " + id + " doesnt exist");
     }
-    public Void deleteCartById(Long id) throws NotFoundException{
+    public void deleteCartById(Long id) throws NotFoundException{
+        findById(id);
         cartRepository.deleteById(id);
-        return null;
     }
 
     public Cart addToCart(Long id, ProductInCart request) throws NotFoundException, BadHttpRequest {

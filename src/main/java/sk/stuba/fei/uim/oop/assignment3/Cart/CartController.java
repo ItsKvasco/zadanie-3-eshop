@@ -32,9 +32,10 @@ public class CartController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCartById(@PathVariable("id") Long id){
+    public ResponseEntity deleteCartById(@PathVariable("id") Long id){
         try {
-            return new ResponseEntity<>(cartService.deleteCartById(id), HttpStatus.OK);
+            cartService.deleteCartById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (NotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
