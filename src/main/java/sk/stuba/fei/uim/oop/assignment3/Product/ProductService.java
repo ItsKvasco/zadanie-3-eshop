@@ -46,9 +46,9 @@ public class ProductService {
         return product;
     }
 
-    public Void deleteById(Long id) throws NotFoundException{
+    public void deleteById(Long id) throws NotFoundException{
+        findById(id);
         repository.deleteById(id);
-        return null;
     }
 
     public Integer getProductAmount(Long id) throws NotFoundException{
