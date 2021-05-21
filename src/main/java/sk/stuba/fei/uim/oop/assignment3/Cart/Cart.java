@@ -5,6 +5,7 @@ import lombok.Setter;
 import sk.stuba.fei.uim.oop.assignment3.Product.Product;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,6 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ElementCollection
-    private List<ProductInCart> shoppingList ;
+    private List<ProductInCart> shoppingList = new ArrayList<>();
     private boolean payed;
 }

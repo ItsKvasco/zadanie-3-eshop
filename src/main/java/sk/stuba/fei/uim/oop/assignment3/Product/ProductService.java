@@ -45,4 +45,24 @@ public class ProductService {
         repository.save(product);
         return product;
     }
+
+    public Void deleteById(Long id) throws NotFoundException{
+        repository.deleteById(id);
+        return null;
+    }
+
+    public Integer getProductAmount(Long id) throws NotFoundException{
+       return findById(id).getAmount();
+    }
+
+    public Product updateProductAmount(Long id, ProductAmountRequest productAmountRequest) throws NotFoundException{
+        var product = findById(id);
+        product.setAmount(product.getAmount()+productAmountRequest.getAmount());
+        repository.save(product);
+        return product;
+    }
+
+    public void save(Product product) {
+        repository.save(product);
+    }
 }

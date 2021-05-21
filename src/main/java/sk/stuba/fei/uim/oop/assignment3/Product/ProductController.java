@@ -21,6 +21,11 @@ public class ProductController {
         return service.findAll();
     }
 
+    @PostMapping
+    public ResponseEntity<Product> addProduct(@RequestBody Product product){
+        return new ResponseEntity<>(service.addProduct(product),HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable("id") Long id){
         try{
@@ -31,15 +36,40 @@ public class ProductController {
         }
     }
 
-    @PostMapping
-    public Product addProduct(@RequestBody Product product){
-        return service.addProduct(product);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Product> postById(@PathVariable("id") Long id, @RequestBody ProductRequest request){
         try{
             return new ResponseEntity<>(service.updateById(id,request), HttpStatus.OK);
+        }
+        catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(service.deleteById(id), HttpStatus.OK);
+        }
+        catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}/amount")
+    public ResponseEntity<ProductAmountRequest> getProductAmount(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(new ProductAmountRequest(service.getProductAmount(id)), HttpStatus.OK);
+        }
+        catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/{id}/amount")
+    public ResponseEntity<ProductAmountRequest> setProductAmount(@PathVariable("id") Long id, @RequestBody ProductAmountRequest productAmountRequest){
+        try{
+            return new ResponseEntity<>(new ProductAmountRequest(service.updateProductAmount(id,productAmountRequest)), HttpStatus.OK);
         }
         catch (NotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
